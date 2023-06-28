@@ -1,0 +1,13 @@
+\subsection{Simulation run}
+
+The simulation is run by typing \texttt{sphcofem < input\_file.in}, which reads the given input file \texttt{input\_file.in} directly. The solver prints the simulation status to the standard output defined in the input file.
+
+\texttt{input\_file.in} is a structured text file with the keywords and variables defined in the next section. Three types of variables are taken into account, strings (\texttt{\%s}), integers (\texttt{\%d}) and real numbers (\texttt{\%f}). The default values are in \texttt{[]}.
+
+\texttt{input\_file.in} can be created either by the particular keywords or using MATLAB script \texttt{model\_save.m} with predefined variables. There can be commented lines beginning by \texttt{\$}. Character \texttt{\$} must not be within the function definition section. An existing \texttt{input\_file.in} can be read using MATLAB script \texttt{model\_read.m} into the predefined variables.
+
+\texttt{sphcofem < input\_file.in > output\_file.txt} can also save the simulation status to the text file \texttt{output\_file.txt}, if the standard output is the screen. The simulation results are save to the binary file \texttt{output\_file.out}.
+
+The basic check on variable consitency and correctness is done at the beginning. If there is an error, it is written to the text message file \texttt{output\_file.msg}. If there are no initialization errors, the message file \texttt{output\_file.msg} consists of warnings. The message file is closed after initialization and all further information is written to the standard output. The text file \texttt{output\_file.log} is being created to summarize the memory integrity.
+
+Simulation can be stopped by copying the signal file \texttt{signal} to the simulation folder. Based on the existence of the signal file \texttt{signal}, the solver stops the simulation, deletes the signal file \texttt{signal} and saves the current state.

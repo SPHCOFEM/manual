@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+\usepackage{a4wide,bm,colortbl,hyperref,multirow,rotating,tcolorbox}
+%\usepackage{graphicx}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\renewcommand{\arraystretch}{1.25}
+%\newcommand{\scale}{1.0}
+
+\definecolor{mygray}{gray}{0.9}
+%\def\figDir{figures}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+%\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\bf SPHCOFEM}
+
+Smoothed particle hydrodynamics coupling finite element method
+
+Lud\v{e}k Hyn\v{c}\'{i}k
+
+The 3-Clause BSD License $\copyright$ 2000, 2002, 2015, 2020 -- 2023
+
+\href{https://github.com/sphcofem}{https://github.com/sphcofem}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Theory}
+
+The theoretical aspects of the SPHCOFEM code are summarizes in \cite{Hyncik:2002a, Hyncik:2002b, Hyncik:2015a, Hyncik:2015b, Hyncik:2022}. The code calculates problems, where smoothed particle hydrodynamics (SPH represented by particles) is coupled to the boundary represented by the finite element method (FEM). So further speaking about particles or domain represent the domains and speaking about boundary nodes (or just nodes) and boundary elemets (or just elements) represents the boudary.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{User manual}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{simulation_run}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{input_file}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{output_file}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Validation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The validation for 1D, 2D and 3D cases is summarized in \cite{Hyncik:2002a, Hyncik:2002b, Hyncik:2015a, Hyncik:2015b}.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain} 
+\bibliography{bibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

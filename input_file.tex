@@ -1,0 +1,1341 @@
+\subsection{Input file}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{File name}
+
+Keyword \texttt{NAME} defines the name of the output file (\texttt{\%s}). The results are written to the binary file \texttt{NAME.out}.
+
+Variable description:
+
+\begin{tabular}{|l|c|}
+\hline
+\multirow{2}{*}{Keyword} & Variable \\ \cline{2-2}
+& \%s \\ \hline
+\texttt{NAME} & \texttt{name} \\ \hline
+\end{tabular}
+
+Keyword definition:
+
+\begin{tcolorbox}
+\texttt{NAME \%s}
+\end{tcolorbox}
+
+MATLAB definition:
+
+\begin{tcolorbox}
+\texttt{name = \%s;}
+\end{tcolorbox}
+
+Keyword \texttt{NAME} is not necessary in the input file. The default value is:
+
+\begin{tabular}{|l|c|}
+\hline
+Variable & \texttt{name} \\ \hline
+Default value & \texttt{[sphcofem]} \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Dimension}
+
+Keyword \texttt{DIM} defines dimensionality of the problem \texttt{dim} (\texttt{\%d}).
+
+Variable description:
+
+\begin{tabular}{|l|c|}
+\hline
+\multirow{2}{*}{Keyword} & Variable \\ \cline{2-2}
+& \%d \\ \hline
+\texttt{DIM} & \texttt{dim} \\ \hline
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{DIM \%d}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{dim = \%d;}
+\end{tcolorbox}
+
+Keyword \texttt{DIM} is not necessary in the input file. Input \texttt{0} for \texttt{dim}means a default value. The default value is:
+
+\begin{tabular}{|l|c|}
+\hline
+Variable & \texttt{dim} \\ \hline
+Default value & [3]$^*$ \\ \hline
+\end{tabular}
+
+$^*$The solver runs in 3D by default. However, converting problems into 1D or 2D considerably decreases the calculation time comparing to 3D due to the nearest neigbour search in lower dimension. Then, the correct dimension \texttt{dim} must be set in order to have correct kernel and smoothing length. 1D problem setting expects user input in the $x$-axis and 2D problem setting expects expect user input in the $x$-axis and the $y$ axis. For 1D and 2D problems, the input related to the remaining second and/or third dimension(s) is ignored (set to zero by default) and not saved to the output file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Termination time}
+
+Keyword \texttt{TMAX} defines the termination time of the dynamical analysis \texttt{t\_max} (\texttt{\%f}).
+
+Variable description:
+
+\begin{tabular}{|l|c|}
+\hline
+\multirow{2}{*}{Keyword} & Variable \\  \cline{2-2}
+& \%f \\ \hline
+\texttt{TMAX} & \texttt{t\_max} \\ \hline
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{TMAX \%f}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{tnax = \%f;}
+\end{tcolorbox}
+
+Keyword \texttt{TMAX} is necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Time controls}
+
+Keyword \texttt{TIME} defines the time interval between two saved states \texttt{dt\_save} (\texttt{\%f}), the initial time step \texttt{dt\_init} (\texttt{\%f}), the maximum time step \texttt{dt\_max} (\texttt{\%f}), the Courant number for stabilazing the SPH calculation time step \texttt{cour} (\texttt{\%f}) and the stabilizing coefficient for finite element time step \texttt{kstab} (\texttt{\%f}). 
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{5}{c|}{Variables} \\ \cline{2-6}
+& \%f& \%f & \%f & \%f & \%f \\ \hline
+\texttt{TIME} & \texttt{dt\_save} & \texttt{dt\_init} & \texttt{dt\_max} & \texttt{cour} & \texttt{kstab} \\ \hline
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{TIME \%f \%f \%f \%f \%f}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{time = [\%f, \%f, \%f, \%f, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{TIME} is not necessary in the input file. Input \texttt{0} for \texttt{dt\_init}, \texttt{cour} or \texttt{kstab} means default values. The defaule values are:
+
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+Variable & \texttt{dt\_save} & \texttt{dt\_init} & \texttt{dt\_max} & \texttt{cour} & \texttt{kstab} \\ \hline
+Default value & [0.0]$^*$ & [0.1] & [0.0]$^{**}$ & [0.9] & [0.9] \\ \hline
+\end{tabular}
+
+$^*$[0.0] means each state is saved.
+
+$^{**}$[0.0] means no upper bound on the time step.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Global acceleration field}
+
+Keyword \texttt{GACC} defines the global acceleration field \texttt{ax} (\texttt{\%f}), \texttt{ay} (\texttt{\%f}) and \texttt{az} (\texttt{\%f}) acting to the whole model.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{3}{c|}{Variables} \\ \cline{2-4}
+& \%f & \%f & \%f \\ \hline
+\texttt{GACC} & \texttt{ax} & \texttt{ay} & \texttt{az} \\ \hline
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{GACC \%f \%f \%f}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{gacc = [\%f, \%f, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{GACC} is not necessary in the input file. Default values are:
+
+\begin{tabular}{|l|c|c|c|}
+\hline
+Variable & \texttt{ax} & \texttt{ay} & \texttt{az} \\ \hline
+Default value & [0.0] & [0.0] & [0.0] \\ \hline
+\end{tabular}
+
+The keyword \texttt{GACC} can be used to avoid adding the acceleration field to each particle or node.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Calculation optimization}
+
+Keyword \texttt{OPTIM} provides additional parameters to optimize the SPH calculation. It defines the switch, if the data will be checked \texttt{data\_check} (\texttt{\%d}), the switch, if the output will be printed \texttt{data\_print} (\texttt{\%d}), the step between integration cycles output \texttt{cycle\_print} (\texttt{\%d}), the nearest neighbour search (NNS) model \texttt{nnopt} (\texttt{\%d}), the radius multiplier for the NNS \texttt{opt} (\texttt{\%f}), the number of cycles between consequent contact search \texttt{cycle\_contact} (\texttt{\%d}), the integration scheme \texttt{integration} (\texttt{\%d}) and the memory check option \texttt{mem\_check} (\texttt{\%d}).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\multirow{3}{*}{Keyword} & \multicolumn{5}{c|}{Variables} \\ \cline{2-6}
+& \%d & \%d & \%d & \%d & \%d \\ \cline{2-6}
+& \%d & \%d & \%d \\  \hline
+\multirow{2}{*}{\texttt{OPTIM}} & \texttt{data\_check} & \texttt{data\_print} & \texttt{cycle\_print} & \texttt{nnopt} & \texttt{opt} \\ \cline{2-6}
+& \texttt{cycle\_contact} & \texttt{integration} & \texttt{mem\_check} \\ \cline{1-4}
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{OPTIM \%d \%d \%d \%d \%f \%d \%d \%d}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{optim = [\%d, \%d, \%d, \%d, \%f, \%d, \%d, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{OPTIM} is not necessary in the input file. Input \texttt{0.0} for \texttt{opt} means a default value. Default values are:
+
+\begin{tabular}{|c|c|l|l|}
+\hline
+{\bf Variable} & {\bf Value} & {\bf Description} & {\bf Remark} \\ \hline
+\multirow{2}{*}{\texttt{data\_check}} & 0 & Inactive & \multirow{2}{*}{---} \\ \cline{2-3}
+& [1] & Active & \\ \hline
+\multirow{3}{*}{\texttt{data\_print}} & 0 & Output suppressed & \multirow{3}{*}{---} \\ \cline{2-3}
+& [1] & Standard output & \\ \cline{2-3}
+& 2 & Text file output$^*$ & \\ \hline
+\multirow{2}{*}{\texttt{cycle\_print}} & 0 & Printing suppressed & --- \\ \cline{2-4}
+& \texttt{N} & Each \texttt{N} cycles & Default \texttt{N=1} \\ \hline
+\multirow{3}{*}{\texttt{nnopt}} & [0] & No NNS clustering & \texttt{opt} ignored \\ \cline{2-4}
+& 1 & NNS clustering at the beginning & \multirow{2}{*}{Default \texttt{opt}=1.0} \\ \cline{2-3}
+& \texttt{N} & NNS clustering each \texttt{N} cycles & \\ \hline
+\texttt{cycle\_contact} & \texttt{N} & Contact calculation each \texttt{N} cycles & Default \texttt{N=1} \\ \hline
+\multirow{4}{*}{\texttt{integration}} & 0 & Euler method & \multirow{4}{*}{---} \\ \cline{2-3}
+& [1] & Central acceleration & \\ \cline{2-3}
+& 2 & Predictor-corrector & \\ \cline{2-3}
+& 3 & Predictor-corrector leapfrog & \\ \hline
+\multirow{2}{*}{\texttt{mem\_check}} & 0 & Inactive & \multirow{2}{*}{---} \\ \cline{2-3}
+& [1] & Active & \\ \cline{2-4} \hline
+\end{tabular}
+
+$^*$The text output file is \texttt{NAME.txt}.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{SPH definitions}
+
+Keyword \texttt{SPH} defines the parameters for the smoothed particle hydrodynamics (SPH) method. It defines the viscosity model \texttt{visc} (\texttt{\%d}), the artificial viscosity parameters (\texttt{alpha}) (\texttt{\%f}) and (\texttt{beta}) (\texttt{\%f}), the  (\texttt{eta}) (\texttt{\%f}) parameter, the artificial stress parameters (\texttt{zeta}) (\texttt{\%f}), (\texttt{nas}) (\texttt{\%f}) and (\texttt{theta}) (\texttt{\%f}), the X-SPH option (\texttt{xsph}) (\texttt{\%d}) and the X-SPH coefficient (\texttt{xeps}) (\texttt{\%f}).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{9}{c|}{Variables} \\ \cline{2-10}
+& \%d & \%f & \%f & \%f & \%f & \%f & \%f & \%d & \%f \\ \hline
+\texttt{SPH} & \texttt{visc} & \texttt{alpha} & \texttt{beta} & \texttt{eta} & \texttt{zeta}$^*$ & \texttt{nas}$^*$ & \texttt{theta}$^*$ & \texttt{xsph} & \texttt{xeps} \\ \hline
+\end{tabular}
+
+$^*$Artificial stress parameters are ignored, if material models 7, 8, 9 or 27 are not present.
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{SPH \%d \%f \%f \%f \%f \%f \%f \%d \%f}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{sph = [\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{SPH} is not necessary in the input file. Default values are:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+Variable & \texttt{visc} & \texttt{alpha} & \texttt{beta} & \texttt{eta} & \texttt{zeta} & \texttt{nas} & \texttt{theta} & \texttt{xsph} & \texttt{xeps} \\ \hline
+Default value & [0] & [1.2] & [1.5] & [0.1] & [0.3] & [4] & [0.01] & [0] & [0.5] \\ \hline
+\end{tabular}
+
+Variable possible values:
+
+\begin{tabular}{|c|c|l|l|}
+\hline
+{\bf Variable} & {\bf Value} & {\bf Description} & {\bf Remark} \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Viscosity models}\\ \hline
+\hline
+\texttt{visc} & [0] & Artificial viscosity only & Always active \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Second order viscous term}\\ \hline
+\hline
+\texttt{visc} & 1 & Kernel second derivative & --- \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Viscosity approximations}\\ \hline
+\hline
+\multirow{5}{*}{\texttt{visc}} & 2 & Monaghan, Cleary, Gingold (2006) & \cite{Monaghan:1983, Cleary:1998, Macia:2011} \\ \cline{2-4}
+& 3 & Morris et al. (1997) & \cite{Morris:1997, Macia:2011} \\ \cline{2-4}
+& 4 & Takeda et al. (1994) & \cite{Takeda:1994, Macia:2011} \\ \cline{2-4}
+& 5 & Onderik et al. (2007) & \cite{Onderik:2007, Macia:2011} \\ \cline{2-4}
+& 6 & Monaghan and Gingold (1983) & \cite{Monaghan:1983, Macia:2011}\\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{XSPH}\\ \hline
+\hline
+\multirow{4}{*}{\texttt{xsph}} & 0 & Inactive & \multirow{4}{*}{---} \\ \cline{2-3}
+& 1 & Active only for predictor step & \\ \cline{2-3}
+& 2 & Active only for corrector step & \\ \cline{2-3}
+& 3 & Active for both predictor and corrector steps & \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{FEM definitions}
+
+Keyword \texttt{FEM} provided additional parameters for the finite element (FEM) method. It concerns material damping parameters \texttt{c0} and \texttt{c1}.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{2}{c|}{Variables} \\ \cline{2-3}
+& \%f & \%f \\ \hline
+\texttt{FEM} & \texttt{c0} & \texttt{c1} \\ \hline
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{FEM \%f \%f}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{fem = [\%f, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{FEM} is not necessary in the input file. Default values are:
+
+\begin{tabular}{|l|c|c|}
+\hline
+Variable & \texttt{c0} & \texttt{c1} \\ \hline
+Default value & [0.0] & [0.0] \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Saving variables}
+
+Keyword \texttt{SAVE} defines what variables are save to the output file \texttt{FILE.out}. Time \texttt{t} and positions of all particles \texttt{xs}, \texttt{ys}, \texttt{zs} and all boundary nodes \texttt{xb}, \texttt{yb}, \texttt{zb} are saved in default (if the particles and/or nodes exist).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{6}{*}{Keyword} & \multicolumn{11}{c|}{Variables} \\ \cline{2-12}
+& \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d \\ \cline{2-12}% & \multicolumn{2}{c}{} \\ \cline{2-12}
+& \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d \\ \cline{2-12} 
+& \%d & \%d & \%d & \%d & \%d & \multicolumn{6}{c}{} \\ \cline{2-6}
+& \%d & \%d & \%d & \%d & \multicolumn{7}{c}{} \\ \cline{2-9}
+& \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d\\ \cline{1-10} % & \multicolumn{3}{c}{} \\ \cline{1-10}
+\multirow{5}{*}{SAVE} & dt & kines & innes & potes & kineb & disib & defob & poteb & tote \\ \cline{2-12} % & \multicolumn{2}{c}{} \\ \cline{2-12}
+& vs & dvs & as & fs & rhos & drhos & us & dus & ps & cs & hs \\ \cline{2-12}
+& es & des & Os & Ds & dDs \\ \cline{2-6} % & \multicolumn{6}{c}{} \\ \cline{2-6}
+& vb & ab & fb & Fc \\ \cline{2-9} % & \multicolumn{7}{c}{} \\ \cline{2-9}
+& xr & psir & vr & or & ar & alphar & fr & Mr \\ \cline{1-9} % & \multicolumn{3}{c}{} \\ \cline{1-9}
+\end{tabular}
+
+Keyword description:
+
+\begin{tcolorbox}
+\texttt{SAVE \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d \%d}
+\end{tcolorbox}
+
+MATLAB description:
+
+\begin{tcolorbox}
+\texttt{saver = [\%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{SAVE} is not necessary in the input file. Using \texttt{saver} is MATLAB is necesssary due to tthe collision with a standard MATLAB keyword. Default values are:
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{*}{Time step} & \multirow{2}{*}{\texttt{save\_dt}} & \multirow{2}{*}{\texttt{dt}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Particles kinetic energy} & \multirow{2}{*}{save\_kine\_s} & \multirow{2}{*}{\texttt{kines}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles internal energy} & \multirow{2}{*}{save\_inne\_s} & \multirow{2}{*}{\texttt{innes}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles potential energy} & \multirow{2}{*}{save\_pote\_s} & \multirow{2}{*}{\texttt{potes}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Nodal kinetic energy} & \multirow{2}{*}{save\_kine\_b} & \multirow{2}{*}{\texttt{kineb}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Nodal dissipation energy} & \multirow{2}{*}{save\_inne\_b} & \multirow{2}{*}{\texttt{inneb}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Elements deformation energy} & \multirow{2}{*}{save\_defo\_b} & \multirow{2}{*}{\texttt{defob}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Elements potential energy} & \multirow{2}{*}{save\_pote\_b} & \multirow{2}{*}{\texttt{poteb}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Total energy} & \multirow{2}{*}{save\_tote} & \multirow{2}{*}{\texttt{tote}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Particles velocities} & \multirow{2}{*}{save\_v\_s} & \multirow{2}{*}{\texttt{vs}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles velocities derivative} & \multirow{2}{*}{save\_dv\_s} & \multirow{2}{*}{\texttt{dvs}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles accelerations} & \multirow{2}{*}{save\_a\_s} & \multirow{2}{*}{\texttt{as}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles forces} & \multirow{2}{*}{save\_f\_s} & \multirow{2}{*}{\texttt{fs}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Particles density} & \multirow{2}{*}{save\_rho\_s} & \multirow{2}{*}{\texttt{rhos}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles density derivatives} & \multirow{2}{*}{save\_drhodt\_s} & \multirow{2}{*}{\texttt{drhos}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles internal energy} & \multirow{2}{*}{save\_u\_s} & \multirow{2}{*}{\texttt{us}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles internal energy derivative} & \multirow{2}{*}{save\_dudt\_s} & \multirow{2}{*}{\texttt{dus}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles pressure} & \multirow{2}{*}{save\_p\_s} & \multirow{2}{*}{\texttt{ps}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles sound speed} & \multirow{2}{*}{save\_c\_s} & \multirow{2}{*}{\texttt{cs}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles smoothing length} & \multirow{2}{*}{save\_h\_s} & \multirow{2}{*}{\texttt{hs}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Particles deformation} & \multirow{2}{*}{save\_e\_s} & \multirow{2}{*}{\texttt{es}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles deformation rate} & \multirow{2}{*}{save\_dedt\_s} & \multirow{2}{*}{\texttt{des}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles rotation} & \multirow{2}{*}{save\_O\_s} & \multirow{2}{*}{\texttt{Os}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles deviatoric stress} & \multirow{2}{*}{save\_S\_s} & \multirow{2}{*}{\texttt{Ds}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Particles deviatoric stress derivative} & \multirow{2}{*}{save\_dSdt\_s} & \multirow{2}{*}{\texttt{dDs}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Nodal velocities} & \multirow{2}{*}{save\_v\_b} & \multirow{2}{*}{\texttt{vb}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Nodal accelerations} & \multirow{2}{*}{save\_a\_b} & \multirow{2}{*}{\texttt{ab}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Nodal forces} & \multirow{2}{*}{save\_f\_b} & \multirow{2}{*}{\texttt{fb}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Rigid bodies positions} & \multirow{2}{*}{save\_x\_r} & \multirow{2}{*}{\texttt{xr}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies rotations} & \multirow{2}{*}{save\_psi\_r} & \multirow{2}{*}{\texttt{psir}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies velocities} & \multirow{2}{*}{save\_v\_r} & \multirow{2}{*}{\texttt{vr}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies rotational velocities} & \multirow{2}{*}{save\_omega\_r} & \multirow{2}{*}{\texttt{omegar}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies accelerations} & \multirow{2}{*}{save\_a\_r} & \multirow{2}{*}{\texttt{ar}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies rotational acceleration} & \multirow{2}{*}{save\_alpha\_r} & \multirow{2}{*}{\texttt{alphar}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies forces} & \multirow{2}{*}{save\_f\_r} & \multirow{2}{*}{\texttt{fr}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\multirow{2}{1.6in}{Rigid bodies moments} & \multirow{2}{*}{save\_M\_r} & \multirow{2}{*}{\texttt{Mr}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\begin{tabular}{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{2}{c|}{\bf Variable} & \multirow{2}{*}{\bf Value} & \multirow{2}{*}{\bf Saving} \\ \cline{2-3}
+& {\bf Solver} & {\bf MATLAB} & & \\ \hline
+\multirow{2}{1.6in}{Contact force} & \multirow{2}{*}{save\_f\_c} & \multirow{2}{*}{\texttt{fc}} & [0] & Inactive \\ \cline{4-5}
+& & & 1 & Active \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Functions}
+
+Keyword \texttt{FUNCT} defines the function $y=f(x)$. The first line comsists of the function number \texttt{num}, the number of function data pairs \texttt{N}, the x-multiplier \texttt{mx}, the y-multiplier, \texttt{my}, the x-shift \texttt{dx} and the y-shift \texttt{dy}. \texttt{N} lines defining the function data pairs \texttt{xi} and \texttt{xi}, $i\in\{1,\dots,N\}$ follows.
+
+Variable description:
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|l|}{\multirow{2}{*}{Keyword}} & \multicolumn{6}{c|}{Variables} \\ \cline{3-8}
+\multicolumn{2}{|l|}{} & \%d & \%d & \%f & \%f & \%f & \%f \\ \hline
+\multicolumn{2}{|l|}{\texttt{FUNCT}} & \texttt{num} & \texttt{N} & \texttt{mx} & \texttt{my} & \texttt{dx} & \texttt{dy} \\ \hline
+\%f & \%f \\ \cline{1-2}
+\texttt{x1} & \texttt{y1} \\ \cline{1-2}
+\texttt{x2} & \texttt{y2} \\ \cline{1-2}
+\texttt{...} & \texttt{...} \\ \cline{1-2}
+\texttt{xN} & \texttt{yN} \\ \cline{1-2}
+\end{tabular}
+
+Keyword definition (for more functions repeat the function section):
+
+\begin{tcolorbox}
+\texttt{FUNCT \%d \%d \%f \%f \%f \%f \\
+ \%f \%f \\
+ \%f \%f \\
+... \\
+ \%f \%f \\
+FUNCT \%d \%d \%f \%f \%f \%f \\
+ \%f \%f \\
+ \%f \%f \\
+... \\
+ \%f \%f \\
+... \\
+FUNCT \%d \%d \%f \%f \%f \%f \\
+ \%f \%f \\
+ \%f \%f \\
+... \\
+ \%f \%f}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the material matrix):
+
+\begin{tcolorbox}
+\texttt{funct = [\%d, \%d; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       ...; \\
+                       \%f, \%f; \\
+                      \%d, \%d; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       ...; \\
+                       \%f, \%f; \\
+                       ...; \\
+                       \%f, \%f; \\
+                      \%d, \%d; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       \%f, \%f; \\
+                       ...; \\
+                       \%f, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{FUNCT} is necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Materials}
+
+Keyword \texttt{MATER} defines the constitutive equation for the implemented material models. The variables depends on the particular material model.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{12}{c|}{Variables} \\ \cline{2-13}
+& \%d & \%d & \%d & \%f & \%f & \%f & \%f & \%f & \%f & \%f & \%f & \%f \\ \hline
+\texttt{MATER} & \texttt{num} & \texttt{dom} & \texttt{type} & \texttt{rho} & \texttt{mu} & \texttt{T} & \texttt{kap} & \texttt{gam} & \texttt{aux1} & \texttt{aux2} & \texttt{aux3} & \texttt{aux4} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the material line):
+
+\begin{tcolorbox}
+\texttt{MATER \%d \%d \%d \%f \%f \%f \%f \%f \%f \%f \%f \%f} \\
+\texttt{MATER \%d \%d \%d \%f \%f \%f \%f \%f \%f \%f \%f \%f} \\
+... \\
+\texttt{MATER \%d \%d \%d \%f \%f \%f \%f \%f \%f \%f \%f \%f}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the material matrix):
+
+\begin{tcolorbox}
+\texttt{mater = [\%d, \%d, \%d, \%f, \%f, \%f, \%f, \%f, \%f, \%f, \%f, \%f; \\
+\%d, \%d, \%d, \%f, \%f, \%f, \%f, \%f, \%f, \%f, \%f, \%f; \\
+...; \\
+\%d, \%d, \%d, \%f, \%f, \%f, \%f, \%f, \%f, \%f, \%f, \%f]}
+\end{tcolorbox}
+
+Keyword \texttt{MATER} is necessary in the input file.
+
+Materials implemented:
+
+\begin{tabular}{|c|c|l|l|}
+\hline
+{\bf Dimension} & {\bf Type} & {\bf Constitutive equation} & {\bf Remark} \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Rigid body}\\ \hline
+\hline
+\multirow{2}{*}{1D, 2D, 3D} & \multirow{2}{*}{0} & \multirow{2}{*}{Rigid body} & \multirow{2}{2in}{Particles and nodes can be combined in single material} \\ 
+& & & \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Fluid equation of state (EOS)}\\ \hline
+\hline
+\multirow{3}{*}{1D, 2D, 3D} & 1 & Gas EOS & --- \\ \cline{2-4}
+& 2 & Liquid EOS & Material bulk modulus $K$ \\ \cline{2-4}
+& 3 & Liquid EOS (SPH) & $K=\rho c^2$ \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Linear elastic solid FEM (elements with nodes $N_1$, $N_2$, $N_3$, $N_4$ )} \\ \hline
+\hline
+1D & 4, 5, 6 & Mass point & Takes $N_1$ into account \\ \hline
+\multirow{4}{*}{2D} & 4 & Bar & Takes $N_1$ and $N_2$ into account \\ \cline{2-4}
+& 5 & Beam & Takes $N_1$ and $N_2$ into account \\ \cline{2-4}
+& \multirow{2}{*}{6} & Triangle & $N_4=N_3$ \\ \cline{3-4}
+& & Rectangle & --- \\ \hline 
+\multirow{7}{*}{3D} & \multirow{3}{*}{4} & Bar & {\it Not implemented} \\ \cline{3-4}
+& & Triangle membrane & {\it Only for contact} \\ \cline{3-4}
+& & Rectangle membrane & {\it Not implemented} \\ \cline{2-4}
+& \multirow{3}{*}{5} & Beam & {\it Not implemented} \\ \cline{3-4}
+& & Triangle shell & {\it Only for contact} \\ \cline{3-4}
+& & Rectangle shell$^*$ & {\it Not implemented} \\ \cline{2-4}
+& 6 & Tetrahedron & --- \\ \hline 
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Solid SPH} \\ \hline
+\hline
+\multirow{3}{*}{1D, 2D, 3D} & 7 & Linear elastodynamics (Hookean) & --- \\ \cline{2-4}
+& 8 & Elastodynamics (Neo-Hookean) & {\it Not implemented} \\ \cline{2-4}
+& 9 & User-defined & In {\it user\_defined\_material.c} \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Fluid EOS with tension}\\ \hline
+\hline
+\multirow{2}{*}{1D, 2D, 3D} & 12 & \multicolumn{2}{l|}{Type 2 with inter-particle tension} \\ \cline{2-4}
+& 13 & \multicolumn{2}{l|}{Type 3 with inter-particle tension} \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{SPH with Mue-Gr\"uneisen EOS}\\ \hline
+\hline
+\multirow{2}{*}{1D, 2D, 3D} & 23 & \multicolumn{2}{l|}{Type 3 with Mue-Gr\"uneisen EOS} \\ \cline{2-4}
+& 27 & \multicolumn{2}{l|}{Type 7 with Mue-Gr\"uneisen EOS} \\ \hline
+\end{tabular}
+
+$^*$Not possible for rigid body material type 0. For rigid body material type 0, only triangular elements are possible as 2D representation in 3D.
+
+Variable constitutive parameters (--- means that the particular variable is not taken into account):
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{MATER}\\ \hline
+\hline
+Type & \texttt{dom} & \texttt{rho} & \texttt{mu} & \texttt{T} & \texttt{kappa} & \texttt{gamma} & \texttt{aux1} & \texttt{aux2} & \texttt{aux3} & \texttt{aux4} \\ \hline
+\%d & \%d & \%f & \%f & \%f & \%f & \%f & \%f & \%f & \%f & \%f \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{Rigid body}\\ \hline
+\hline
+\multirow{2}{*}{0} & $d$ & $\rho$ & $G$ & $K$ & --- & $\gamma$ & \multirow{2}{*}{$COG$} & \multirow{2}{*}{$N_1$} & \multirow{2}{*}{$N_2$} & \multirow{2}{*}{$N_3$} \\ \cline{2-7}
+& $d$ & $-\rho$ & $m$ & $I_1$ & $I_2$ & $I_3$ & & & & \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{Fluid SPH}\\ \hline
+\hline
+1 & $d$ & $\rho$ & $\mu$ & $T$ & $\kappa$ & $c_V$ & --- & --- & --- & --- \\ \hline
+2 & $d$ & $\rho$ & $\mu$ & $K$ & $p_0$ & $\gamma$ & --- & --- & --- & --- \\ \hline
+3 & $d$ & $\rho$ & $\mu$ & --- & $p_0$ & $\gamma$ & --- & --- & --- & --- \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{Solid FEM}\\ \hline
+\hline
+\multirow{2}{*}{4} & \multirow{2}{*}{$d$} & \multirow{2}{*}{$\rho$} & \multirow{2}{*}{$\nu$} & \multirow{2}{*}{$E$} & $A^*$ (2D, 3D) & \multirow{2}{*}{$b$} & --- & --- & --- & --- \\ \cline{6-6}\cline{8-11}
+& & & & & $t^{**}$ (3D) & & & & & \\ \hline
+\multirow{2}{*}{5} & \multirow{2}{*}{$d$} & \multirow{2}{*}{$\rho$} & \multirow{2}{*}{$\nu$} & \multirow{2}{*}{$E$} & $A^*$ (2D, 3D) & \multirow{2}{*}{$b$} & --- & --- & --- & --- \\ \cline{6-6}\cline{8-11}
+& & & & & $t^{**}$ & & & & & \\ \hline
+\multirow{3}{*}{6} & \multirow{3}{*}{$d$} & \multirow{3}{*}{$\rho$} & \multirow{3}{*}{$\nu$} & \multirow{3}{*}{$E$} & $A^*$ (2D, 3D) & \multirow{3}{*}{$b$} & --- & --- & --- & --- \\ \cline{6-6}\cline{8-11}
+& & & & & $t^{***}$ (2D) & & --- & --- & --- & --- \\ \cline{6-6}\cline{8-11}
+& & & & & --- (tertahedron) & & --- & --- & --- & --- \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{Solid SPH}\\ \hline
+\hline
+7 & $d$ & $\rho$ & $G$ & $K$ & $p_0$ & $\gamma$ & --- & --- & --- & --- \\ \hline
+8 & $d$ & $\rho$ & --- & --- & --- & --- & --- & --- & --- & --- \\ \hline
+9 & $d$ & $\rho$ & $c_1^{****}$ & $c_2$ & $c_3$ & $c_4$ & $c_5$ & $c_6$ & $c_7$ & $c_8$ \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{Fluid SPH with tension}\\ \hline
+\hline
+12 & $d$ & $\rho$ & $\mu$ & $K$ & $k$ & $\gamma$ & --- & --- & --- & --- \\ \hline
+13 & $d$ & $\rho$ & $\mu$ & --- & $k$ & $\gamma$ & --- & --- & --- & --- \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{SPH with Mue-Gr\"uneisen EOS}\\ \hline
+\hline
+23 & $d$ & $\rho$ & $\mu$ & $K$ & $p_0$ & --- & s & $\Gamma_0$ & --- & --- \\ \hline
+27 & $d$ & $\rho$ & $\mu$ & $K$ & $p_0$ & --- & s & $\Gamma_0$ & --- & --- \\ \hline
+\end{tabular}
+
+$^*$Cross-sectional area $A$ for bar or beam element in 2D and 3D ($N_2=N_3=N_4$).
+
+$^{**}$Thickness of memrane or shell element in 3D (triangle defined by $N_3=N_4$).
+
+$^{***}$Thickness of triangle or rectangle element in 2D (triangle defined by $N_3=N_4$).
+
+$^{****}$$c$ = user coefficient.
+
+Variable \texttt{dom} represent possibility to divide the model into several domains $d\in\{1, 2, 3, \dots\}$. Particles, nodes and elements in different domains do not interact (either by smoothing or by contacts).
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Contacts}
+
+Keyword \texttt{CONTACT} defines the contact between two materials. It concerns the contact \texttt{number} (\texttt{\%d}), the contact \texttt{type} (\texttt{\%d}), the \texttt{slave}$^*$ material number (\texttt{\%d}), the \texttt{master}$^*$ material number (\texttt{\%d}), the contact thickness \texttt{ct}$^{**}$ (\texttt{\%f}), the linear penalty factor \texttt{klin} (\texttt{\%f}), the nonlinear penalty factor \texttt{klin} (\texttt{\%f}), the contact friction coefficient \texttt{kf} (\texttt{\%f}) and the contact damping \texttt{kd} (\texttt{\%f}).
+
+$^*$The \texttt{slave}$^*$ material segment motion is driven by the \texttt{master} material segment motion.
+
+$^{**}$For contacts, where particles are active, \texttt{ct} can be negative. The contact thickness is then calculated as the negative value of \texttt{ct} times the particles smoothing length.
+
+Keyword description (for more contact models repeat the contact line):
+
+\begin{tcolorbox}
+\texttt{CONTACT \%d \%d \%d \%d \%f \%f \%f \%f \%f} \\
+\texttt{CONTACT \%d \%d \%d \%d \%f \%f \%f \%f \%f} \\
+... \\
+\texttt{CONTACT \%d \%d \%d \%d \%f \%f \%f \%f \%f}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the contact matrix):
+
+\begin{tcolorbox}
+\texttt{contact = [\%d, \%d, \%d, \%d, \%f, \%f, \%f, \%f \%f; \\
+\%d, \%d, \%d, \%d, \%f, \%f, \%f, \%f \%f; \\
+... \\
+\%d, \%d, \%d, \%d, \%f, \%f, \%f, \%f \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{CONTACT} is not necessary in the input file.
+
+Contacts implemented:
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\bf Material} & \multicolumn{2}{c|}{\bf Segment} \\ \hline
+{\bf Slave} & {\bf Master} & {\bf Slave} & {\bf Master} \\ \hline
+SPH & FEM & Particle & Boundary \\ \hline
+FEM & FEM & Node & Boundary \\ \hline
+SPH & SPH & Particle & Particle \\ \hline
+\end{tabular}
+
+Contact models for FEM/SPH, FEM/FEM and SPH/SPH contacts:
+
+\begin{tabular}{|c|c|l|l|l|l|}
+\hline
+{\bf Dimension} & {\bf Type} & {\bf Description} & {\bf Slave} & {\bf Master} & {\bf Remark} \\ \hline
+\multirow{4}{*}{1D} & 0 & Null$^*$ & \multirow{2}{*}{Particle} & \multirow{2}{*}{Particle} & \\ \cline{2-3}
+& \multirow{2}{*}{1} & \multirow{2}{*}{Penalty} & & & \multirow{4}{*}{---} \\ \cline{4-5}
+& & & \multirow{2}{*}{Node} & \multirow{2}{15mm}{Particle or node} & \\ \cline{2-3}
+& 3 & Tied & & & \\ \cline{1-5}
+\multirow{5}{*}{2D} & 0 & Null & \multirow{2}{*}{Particle} & \multirow{2}{*}{Particle} & \\ \cline{2-3}
+& \multirow{2}{*}{1} & \multirow{2}{*}{Penalty} & & & \\ \cline{4-6}
+& & & \multirow{3}{15mm}{Particle or node} & \multirow{3}{*}{Line $N_1$, $N_2$} & \multirow{3}{15mm}{Outer normal required} \\ \cline{2-3}
+& 2 & Sliding w/o separation & & & \\ \cline{2-3}
+& 3 & Tied & & & \\ \hline
+\multirow{5}{*}{3D} & 0 & Null & \multirow{2}{*}{Particle} & \multirow{2}{*}{Particle} & \multirow{2}{*}{---} \\ \cline {2-3}
+& \multirow{2}{*}{1} & \multirow{2}{*}{Penalty} & & & \\ \cline{4-6}
+& & & \multirow{3}{15mm}{Particle or node} & \multirow{3}{1in}{Triangles $N_1$, $N_2$, $N_3$ and $N_1$, $N_3$, $N_4$$^{**}$} & \multirow{3}{15mm}{Outer normal required} \\ \cline{2-3}
+& 2 & Sliding w/o separation & & & \\ \cline{2-3}
+& 3 & Tied & & & \\ \hline
+\end{tabular}
+
+$^*$Null contact serves for defining area, where no interaction (by contact or by smoothing length interpolation) among particles appears.
+
+$^{**}$Bar and beam elements in 3D are ignored in the contact calculation.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Particles}
+
+Keyword \texttt{SNODE} defines the particles. Each row concerns of the particle number \texttt{ns} (\texttt{\%d}), the material number \texttt{ms} (\texttt{\%d}), the represented volume \texttt{vs} (\texttt{\%f}) and the particle coordinates \texttt{xs} (\texttt{\%f}), \texttt{ys} (\texttt{\%f}) and \texttt{zs} (\texttt{\%f}).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{6}{c|}{Variables} \\ \cline{2-7}
+& \%d & \%d & \%f & \%f & \%f & \%f \\ \hline
+\texttt{SNODE} & \texttt{ns} & \texttt{ms} & \texttt{vs} & \texttt{xs} & \texttt{ys} & \texttt{zs} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the particle line):
+
+\begin{tcolorbox}
+\texttt{SNODE \%d \%d \%f \%f \%f \%f} \\
+\texttt{SNODE \%d \%d \%f \%f \%f \%f} \\
+... \\
+\texttt{SNODE \%d \%d \%f \%f \%f \%f} \\
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the particle matrix):
+
+\begin{tcolorbox}
+\texttt{snode = [\%d, \%d, \%f, \%f, \%f, \%f, \%f; \\
+\%d, \%d, \%f, \%f, \%f, \%f, \%f; \\
+... \\
+\%d, \%d, \%f, \%f, \%f, \%f, \%f];}
+\end{tcolorbox}
+
+The particles numbering must be complementary to the boundary nodes numbering. At least one keyword \texttt{SNODE} or \texttt{BNODE} is necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Nodes}
+
+Keyword \texttt{BNODE} defines the boundary nodes. Each row concerns of the nodal number \texttt{nb} (\texttt{\%d}) and the nodal coordinates \texttt{xb} (\texttt{\%f}), \texttt{yb} (\texttt{\%f}) and \texttt{zb} (\texttt{\%f}).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{4}{c|}{Variables} \\ \cline{2-5}
+& \%d & \%f & \%f & \%f \\ \hline
+\texttt{BNODE} & \texttt{nb} & \texttt{xb} & \texttt{yb} & \texttt{zb} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the node line):
+
+\begin{tcolorbox}
+\texttt{BNODE \%d \%f \%f \%f} \\
+\texttt{BNODE \%d \%f \%f \%f} \\
+... \\
+\texttt{BNODE \%d \%f \%f \%f}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the node matrix):
+
+\begin{tcolorbox}
+\texttt{bnode = [\%d, \%f, \%f, \%f; \\
+\%d, \%f, \%f, \%f; \\
+... \\
+\%d, \%f, \%f, \%f];}
+\end{tcolorbox}
+
+The boundary nodes numbering must be complementary to the particles numbering. At least one keyword \texttt{SNODE} or \texttt{BNODE} is necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Elements}
+
+Keyword \texttt{BELEM} defines the boundary finite elements. Each row concerns of the element number \texttt{ne} (\texttt{\%d}), the element material number \texttt{me} (\texttt{\%d}) and four nodes \texttt{n1} (\texttt{\%d}), \texttt{n2} (\texttt{\%d}), \texttt{n3} (\texttt{\%d}) and \texttt{n4} (\texttt{\%d}). For bars and beams, \texttt{n3} and \texttt{n4} are not taken into account. If \texttt{n3} equals \texttt{n4}, the triangular element is considered in 2D. 
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{6}{c|}{Variables} \\ \cline{2-7}
+& \%d & \%d & \%d & \%d & \%d & \%d \\ \hline
+\texttt{BELEM} & \texttt{n} & \texttt{m} & \texttt{n1} & \texttt{n2} & \texttt{n3} & \texttt{n4} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the element line):
+
+\begin{tcolorbox}
+\texttt{BELEM \%d \%d \%d \%d \%d \%d} \\
+\texttt{BELEM \%d \%d \%d \%d \%d \%d} \\
+... \\
+\texttt{BELEM \%d \%d \%d \%d \%d \%d}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the element matrix):
+
+\begin{tcolorbox}
+\texttt{snode = [\%d, \%d, \%d, \%d, \%d, \%d; \\
+\%d, \%d, \%d, \%d, \%d, \%d; \\
+... \\
+\%d, \%d, \%d, \%d, \%d, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{BELEM} is not necessary in the input file.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Initial pressure}
+
+Keyword \texttt{INPRE} defines the initial pressure for particles. Each row concerns of the particle number \texttt{n} (\texttt{\%d}) and the initial pressure \texttt{ps} (\texttt{\%f}).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{2}{c|}{Variables} \\ \cline{2-3}
+& \%d & \%f \\ \hline
+\texttt{INPRE} & \texttt{n} & \texttt{ps} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the initial pressure line):
+
+\begin{tcolorbox}
+\texttt{INPRE \%d \%f} \\
+\texttt{INPRE \%d \%f} \\
+... \\
+\texttt{INPRE \%d \%f}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the initial pressure matrix):
+
+\begin{tcolorbox}
+\texttt{inpre = [\%d, \%f; \\
+\%d, \%f; \\
+... \\
+\%d, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{INPRE} is not necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Initial velocity}
+
+Keyword \texttt{INVEL} defines the initial velocity for both particles and boundary nodes. Each row concerns of the particle or nodal number \texttt{n} (\texttt{\%d}) and the translational velocities \texttt{vx} (\texttt{\%f}), \texttt{vy} (\texttt{\%f}) and \texttt{vz} (\texttt{\%f}) and the rotational velocities \texttt{ox} (\texttt{\%f}), \texttt{oy} (\texttt{\%f}) and \texttt{oz} (\texttt{\%f}) in the coordinate system frame \texttt{frame} (\texttt{\%d}). Rotational velocities \texttt{ox}, \texttt{oy}, \texttt{oz} and \texttt{frame} are ignored if the particle or the node, on which the initial velocity is specified, is not a centre of gravity of a rigid body.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{8}{c|}{Variables} \\ \cline{2-9}
+& \%d & \%f & \%f & \%f & \%f & \%f & \%f & \%d \\ \hline
+\texttt{INVEL} & \texttt{n} & \texttt{vx} & \texttt{vy} & \texttt{vz} & \texttt{ox} & \texttt{oy} & \texttt{oz} & \texttt{frame} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the initial velocity line):
+
+\begin{tcolorbox}
+\texttt{INVEL \%d \%f \%f \%f \%f \%f \%f \%d} \\
+\texttt{INVEL \%d \%f \%f \%f \%f \%f \%f \%d} \\
+... \\
+\texttt{INVEL \%d \%f \%f \%f \%f \%f \%f \%d}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the initial velocity matrix):
+
+\begin{tcolorbox}
+\texttt{invel = [\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d; \\
+\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d; \\
+... \\
+\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{INVEL} is not necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Acceleration field}
+
+Keyword \texttt{ACFLD} defines the acceleration field for both particles and boundary nodes. Each row concerns the particle or nodal number \texttt{n} (\texttt{\%d}), the acceleration field type \texttt{type} (\texttt{\%d}) and the accelerations \texttt{ax} (\texttt{\%f}), \texttt{ay} (\texttt{\%f}) and \texttt{az} (\texttt{\%f}). Coordinate \texttt{frame} is ignored if the particle or the node, on which the initial acceleration field is specified, is not a centre of gravity of a rigid body.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{6}{c|}{Variables} \\ \cline{2-7}
+& \%d & \%d & \%f & \%f & \%f & \%d \\ \hline
+\texttt{ACFLD} & \texttt{n} & \texttt{type} & \texttt{ax} & \texttt{ay} & \texttt{az} & \texttt{frame} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the acceleration field line):
+
+\begin{tcolorbox}
+\texttt{ACFLD \%d \%d \%x \%x \%x \%d} \\
+\texttt{ACFLD \%d \%d \%x \%x \%x \%d} \\
+... \\
+\texttt{ACFLD \%d \%d \%x \%x \%x \%d}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the acceleration field matrix):
+
+\begin{tcolorbox}
+\texttt{acfld = [\%d, \%d, \%x, \%x, \%x; \\
+\%d, \%d, \%x, \%x, \%x, \%d; \\
+... \\
+\%d, \%d, \%x, \%x, \%x, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{ACFLD} is not necessary in the input file.
+
+Variable possible values:
+
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+{\bf Description} & {\bf Variable} & {\bf Type} & \texttt{\bf F} & {\bf Status} \\ \hline
+\multirow{2}{*}{x-acceleration} & \multirow{2}{*}{\texttt{ax}} & 0 & \texttt{f} & Constant $a_x$ = \texttt{ax} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{ax} prescribing $a_x(t)$ \\ \hline
+\multirow{2}{*}{y-acceleration} & \multirow{2}{*}{\texttt{ay}} & 0 & \texttt{f} & Constant $a_y$ = \texttt{ay} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{ay} prescribing $a_y(t)$ \\ \hline
+\multirow{2}{*}{z-acceleration} & \multirow{2}{*}{\texttt{az}} & 0 & \texttt{f} & Constant $a_z$ = \texttt{az} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{az} prescribing $a_z(t)$ \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Nodal force}
+
+Keyword \texttt{FORCE} defines the force acting on the nodes for both particles and boundary nodes. Each row concerns the particle or nodal number \texttt{n} (\texttt{\%d}), the acceleration field type \texttt{type} (\texttt{\%d}) and the forces \texttt{fx} (\texttt{\%f}), \texttt{fy} (\texttt{\%f}) and \texttt{fz} (\texttt{\%f}) and the moments \texttt{fx} (\texttt{\%f}), \texttt{fy} (\texttt{\%f}) and \texttt{fz} (\texttt{\%f}) and the moments \texttt{mx} (\texttt{\%f}), \texttt{my} (\texttt{\%f}) and \texttt{mz} (\texttt{\%f}) in the coordinate system frame \texttt{frame} (\texttt{\%d}). Moments \texttt{mx}, \texttt{my}, \texttt{mz} and \texttt{frame} are ignored if the particle or the node, on which the nodal force is specified, is not a centre of gravity of a rigid body.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{9}{c|}{Variables} \\ \cline{2-10}
+& \%d & \%d & \%f & \%f & \%f & \%f & \%f & \%f & \%d \\ \hline
+\texttt{FORCE} & \texttt{n} & \texttt{type} & \texttt{fx} & \texttt{fy} & \texttt{fz} & \texttt{mx} & \texttt{my} & \texttt{mz} & \texttt{frame} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the nodal force field line):
+
+\begin{tcolorbox}
+\texttt{FORCE \%d \%f \%f \%f \%f \%f \%f \%d} \\
+\texttt{FORCE \%d \%f \%f \%f \%f \%f \%f \%d} \\
+... \\
+\texttt{FORCE \%d \%f \%f \%f \%f \%f \%f \%d}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the nodal force field matrix):
+
+\begin{tcolorbox}
+\texttt{force = [\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d; \\
+\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d; \\
+... \\
+\%d, \%f, \%f, \%f, \%f, \%f, \%f, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{FORCE} is not necessary in the input file.
+
+Variable possible values:
+
+\begin{tabular}{|l|c|c|c|l|}
+\hline
+{\bf Description} & {\bf Variable} & {\bf Type} & \texttt{\bf F} & {\bf Status} \\ \hline
+\multirow{2}{*}{x-force} & \multirow{2}{*}{\texttt{fx}} & 0 & \texttt{f} & Constant $f_x$ = \texttt{fx} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{ax} prescribing $f_x(t)$ \\ \hline
+\multirow{2}{*}{y-force} & \multirow{2}{*}{\texttt{fy}} & 0 & \texttt{f} & Constant $f_y$ = \texttt{fy} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{ay} prescribing $f_y(t)$ \\ \hline
+\multirow{2}{*}{z-force} & \multirow{2}{*}{\texttt{fz}} & 0 & \texttt{f} & Constant $f_z$ = \texttt{fz} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{az} prescribing $f_z(t)$ \\ \hline
+\multirow{2}{*}{x-moment} & \multirow{2}{*}{\texttt{mx}} & 0 & \texttt{m} & Constant $m_x$ = \texttt{mx} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{ax} prescribing $m_x(t)$ \\ \hline
+\multirow{2}{*}{y-moment} & \multirow{2}{*}{\texttt{my}} & 0 & \texttt{m} & Constant $m_y$ = \texttt{my} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{ay} prescribing $m_y(t)$ \\ \hline
+\multirow{2}{*}{z-moment} & \multirow{2}{*}{\texttt{mz}} & 0 & \texttt{m} & Constant $m_z$ = \texttt{mz} \\ \cline{3-5}
+& & 1 & \texttt{d} & Function \texttt{az} prescribing $m_z(t)$ \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Nodal damping}
+
+Keyword \texttt{NDAMP} defines the damping of the boundary nodes. Each row concerns of the nodal number \texttt{n} (\texttt{\%d}) and the damping \texttt{dx} (\texttt{\%f}), \texttt{dy} (\texttt{\%f}) and \texttt{dz} (\texttt{\%f}).
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{4}{c|}{Variables} \\ \cline{2-5}
+& \%d & \%f & \%f & \%f \\ \hline
+\texttt{NDAMP} & \texttt{n} & \texttt{fx} & \texttt{fy} & \texttt{fz} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the nodal damping field line):
+
+\begin{tcolorbox}
+\texttt{NDAMP \%d \%f \%f \%f} \\
+\texttt{NDAMP \%d \%f \%f \%f} \\
+... \\
+\texttt{NDAMP \%d \%f \%f \%f} \\
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the nodal damping field matrix):
+
+\begin{tcolorbox}
+\texttt{ndamp = [\%d, \%f, \%f, \%f; \\
+\%d, \%f, \%f, \%f; \\
+... \\
+\%d, \%f, \%f, \%f];}
+\end{tcolorbox}
+
+Keyword \texttt{NDAMP} is not necessary in the input file.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Boundary conditions}
+
+Keyword \texttt{BOUNC} defines the boundary conditions for both particles and boundary nodes. Each row concerns of the particle or nodal number \texttt{n} (\texttt{\%d}), the boundary condition type \texttt{type} (\texttt{\%d}), and the conditions \texttt{bx} (\texttt{\%d}), \texttt{by} (\texttt{\%d}) and \texttt{bz} (\texttt{\%d}). Further, rotational boundary conditions for rigid body motion \texttt{rx} (\texttt{\%d}), \texttt{ry} (\texttt{\%d}) and \texttt{bz} (\texttt{\%d}) in the coordinate system frame \texttt{frame} (\texttt{\%d}). Boundary conditions \texttt{rx}, \texttt{ry}, \texttt{bz} and \texttt{frame} are ignored if the particle or the node, on which the boundary condition is specified, is not a centre of gravity of a rigid body.
+
+Variable description:
+
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Keyword} & \multicolumn{9}{c|}{Variables} \\ \cline{2-10}
+& \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d & \%d \\ \hline
+\texttt{BOUNC} & \texttt{n} & \texttt{type} & \texttt{bx} & \texttt{by} & \texttt{bz} & \texttt{rx} & \texttt{ry} & \texttt{rz} & \texttt{frame} \\ \hline
+\end{tabular}
+
+Keyword definition (for more material models repeat the boundary condition line):
+
+\begin{tcolorbox}
+\texttt{BOUNC \%d \%d \%d \%d \%d \%d \%d \%d \%d} \\
+\texttt{BOUNC \%d \%d \%d \%d \%d \%d \%d \%d \%d} \\
+... \\
+\texttt{BOUNC \%d \%d \%d \%d \%d \%d \%d \%d \%d}
+\end{tcolorbox}
+
+MATLAB definition (for more material models add lines the boundary condition matrix):
+
+\begin{tcolorbox}
+\texttt{bounc = [\%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d; \\
+\%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d; \\
+... \\
+\%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d, \%d];}
+\end{tcolorbox}
+
+Keyword \texttt{BOUNC} is not necessary in the input file.
+
+Boundary conditions implemented:
+
+\begin{tabular}{|c|l|l|}
+\hline
+{\bf Type} & {\bf Boundary condition} & {\bf Remark} \\ \hline
+0 & \multirow{2}{*}{Static} & Restricted motion \\ \cline{1-1}\cline{3-3}
+-1$^*$ & & Keeping translational initial conditions \\ \hline
+1 & Displacement & Prescribed nodal displacement \\ \hline
+2 & Velocity & Prescribed nodal velocity \\ \hline
+3 & Acceleration & Prescribed nodal acceleration \\ \hline
+\end{tabular}
+
+$^*$Boundary condition type -1 moves the particles or nodes using their initial conditions. If the initial condition is not given, it is the same as boundary condition type 0.
+
+Variable possible values:
+
+{\footnotesize
+\begin{tabular}{|l|c|c|l|}
+\hline
+{\bf Description} & {\bf Variable} & {\bf Value} & {\bf Status} \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Static} \\ \hline
+\hline
+\multirow{2}{*}{x-translation} & \multirow{2}{*}{\texttt{bx}} & 0 & Free \\ \cline{3-4}
+& & 1 & Fixed \\ \hline
+\multirow{2}{*}{y-translation} & \multirow{2}{*}{\texttt{by}} & 0 & Free \\ \cline{3-4}
+& & 1 & Fixed \\ \hline
+\multirow{2}{*}{z-translation} & \multirow{2}{*}{\texttt{bz}} & 0 & Free \\ \cline{3-4}
+& & 1 & Fixed \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Prescribed nodal displacement} \\ \hline
+\hline
+\multirow{3}{*}{x-translation} & \multirow{3}{*}{\texttt{bx}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_1$ & Function \texttt{N}$_1$ prescribing $x(t)$ \\ \hline
+\multirow{3}{*}{y-translation} & \multirow{3}{*}{\texttt{by}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_2$ & Function \texttt{N}$_2$ prescribing $y(t)$ \\ \hline
+\multirow{3}{*}{z-translation} & \multirow{3}{*}{\texttt{bz}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_3$ & Function \texttt{N}$_3$ prescribing $z(t)$ \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Prescribed nodal velocity} \\ \hline
+\hline
+\multirow{3}{*}{x-translation} & \multirow{3}{*}{\texttt{bx}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_1$ & Function \texttt{N}$_1$ prescribing $v_x(t)$ \\ \hline
+\multirow{3}{*}{y-translation} & \multirow{3}{*}{\texttt{by}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_2$ & Function \texttt{N}$_2$ prescribing $v_y(t)$ \\ \hline
+\multirow{3}{*}{z-translation} & \multirow{3}{*}{\texttt{bz}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_3$ & Function \texttt{N}$_3$ prescribing $v_z(t)$ \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Prescribed nodal acceleration} \\ \hline
+\hline
+\multirow{3}{*}{x-translation} & \multirow{3}{*}{\texttt{bx}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_1$ & Function \texttt{N}$_1$ prescribing $a_x(t)$ \\ \hline
+\multirow{3}{*}{y-translation} & \multirow{3}{*}{\texttt{by}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_2$ & Function \texttt{N}$_2$ prescribing $a_y(t)$ \\ \hline
+\multirow{3}{*}{z-translation} & \multirow{3}{*}{\texttt{bz}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_3$ & Function \texttt{N}$_3$ prescribing $a_z(t)$ \\ \hline
+\end{tabular}
+}
+
+{\footnotesize
+\begin{tabular}{|l|c|c|l|}
+\hline
+{\bf Description} & {\bf Variable} & {\bf Value} & {\bf Status} \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Static} \\ \hline
+\hline
+\multirow{2}{*}{x-rotation} & \multirow{2}{*}{\texttt{rx}} & 0 & Free \\ \cline{3-4}
+& & 1 & Fixed \\ \hline
+\multirow{2}{*}{y-rotation} & \multirow{2}{*}{\texttt{ry}} & 0 & Free \\ \cline{3-4}
+& & 1 & Fixed \\ \hline
+\multirow{2}{*}{z-rotation} & \multirow{2}{*}{\texttt{rz}} & 0 & Free \\ \cline{3-4}
+& & 1 & Fixed \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Prescribed nodal displacement} \\ \hline
+\hline
+\multirow{3}{*}{x-rotation} & \multirow{3}{*}{\texttt{rx}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_1$ & Function \texttt{N}$_1$ prescribing $\psi(t)$ \\ \hline
+\multirow{3}{*}{y-rotation} & \multirow{3}{*}{\texttt{ry}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_2$ & Function \texttt{N}$_2$ prescribing $\theta(t)$ \\ \hline
+\multirow{3}{*}{z-rotation} & \multirow{3}{*}{\texttt{rz}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_3$ & Function \texttt{N}$_3$ prescribing $\phi(t)$ \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Prescribed nodal velocity} \\ \hline
+\hline
+\multirow{3}{*}{x-rotation} & \multirow{3}{*}{\texttt{rx}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_1$ & Function \texttt{N}$_1$ prescribing $\omega_x(t)$ \\ \hline
+\multirow{3}{*}{y-rotation} & \multirow{3}{*}{\texttt{ry}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_2$ & Function \texttt{N}$_2$ prescribing $\omega_y(t)$ \\ \hline
+\multirow{3}{*}{z-rotation} & \multirow{3}{*}{\texttt{rz}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_3$ & Function \texttt{N}$_3$ prescribing $\omega_z(t)$ \\ \hline
+\hline
+\rowcolor{mygray}\multicolumn{4}{|c|}{Prescribed nodal acceleration} \\ \hline
+\hline
+\multirow{3}{*}{x-rotation} & \multirow{3}{*}{\texttt{rx}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_1$ & Function \texttt{N}$_1$ prescribing $\alpha_x(t)$ \\ \hline
+\multirow{3}{*}{y-rotation} & \multirow{3}{*}{\texttt{ry}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_2$ & Function \texttt{N}$_2$ prescribing $\alpha_y(t)$ \\ \hline
+\multirow{3}{*}{z-rotation} & \multirow{3}{*}{\texttt{rz}} & 0 & Free \\ \cline{3-4}
+& & -1 & Fixed \\ \cline{3-4}
+& & \texttt{N}$_3$ & Function \texttt{N}$_3$ prescribing $\alpha_z(t)$ \\ \hline
+\end{tabular}
+}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Local coordinate system}
+
+Initial condition \texttt{INVEL} and boundary conditions \texttt{ACFLD}, \texttt{FORCE} and \texttt{BOUNC} can be defined in local coordinate system of a rigid body, if those are applied to the rigid body centre of gravity. The local coordinate system is defined by \texttt{frame} (\texttt{\%d}) with the following possible values:
+
+\begin{tabular}{|l|c|c|l|}
+\hline
+{\bf Description} & {\bf Variable} & {\bf Value} & {\bf Status} \\ \hline
+\multirow{7}{1in}{Coordinate system} & \multirow{7}{*}{\texttt{frame}} & 0 & Global axes system \\ \cline{3-4}
+& & \multirow{2}{*}{1} & \multirow{2}{3.5in}{Local connected to the rigid body principal inertia axes system only for translation} \\
+& & & \\ \cline{3-4}
+& & \multirow{2}{*}{2} & \multirow{2}{3.5in}{Local connected to the rigid body principal inertia axes system only for rotation} \\
+& & & \\ \cline{3-4}
+& & \multirow{2}{*}{3} & \multirow{2}{3.5in}{Local connected to the rigid body principal inertia axes system for translation and rotation} \\
+& & & \\ \hline
+\end{tabular}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Rigid body}
+
+Rigid body is given by material type 0. All particles and nodes belonging to elements from material type 0 are included to a rigid body. Rigid body number is allocated automatically beginning from 1. For rigid body parameters see the material section. Two types of rigid bodies are implemented:
+
+\begin{enumerate}\setcounter{enumi}{-1}
+\item For rigid body type 0 (material $\rho>0$), the mass and moments of inertia are calculated from the mass distribution among the particles and nodes affiliated to the rigid body. Centre of gravity $COG$ node or particle coordinates are calculated from the mass distribution too and particles or nodes $N_1$, $N_2$ and $N_3$ coordinates are set to be coincident with the global coordinate system in time $t=0$. Original nodes or particles coordinates $COG$, $N_1$, $N_2$ and $N_3$ are rewritten.
+\item For rigid body type 1 (material $\rho<0$), the mass $m$ and principal moments of inertia $I_1$, $I_2$ and $I_3$ are given and $\rho$ is used only for nearest neighbour smoothing. Nodes or particles $N_1$, $N_2$ and $N_3$ are expected to define the principal inertia axes from the centre of gravity node or particle $COG$ and must form an orthogonal axes system.
+\end{enumerate}
+
+%Rotations of all particles \texttt{psis}, \texttt{thetas}, \texttt{phis} and all boundary nodes \texttt{psib}, \texttt{thetab}, \texttt{phib} are also saved in default, but they are non-zero only for particles or nodes, which are centres of gravity of rigid bodies.
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Material & Type & \texttt{rho} & \texttt{mu} & \texttt{T} & \texttt{kappa} & \texttt{gamma} & \texttt{aux1} & \texttt{aux2} & \texttt{aux3} & \texttt{aux4} \\ \hline
+\rowcolor{mygray}\multicolumn{11}{|c|}{Rigid body}\\ \hline
+%\multicolumn{2}{|c|}{Rigid body parameters} & $\rho$ & $m$ & $I_1$ & $I_2$ & $I_3$ & $COG$ & $N_1$ & $N_2$ & $N_3$ \\ \hline
+\multirow{2}{*}{0} & 0 & $\rho$ & $G$ & $K$ & $p_0$ & $\gamma$ & \multicolumn{4}{c|}{Calculated and rewritten} \\ \cline{2-11}
+& 1 & $-\rho$ & $m$ & $I_1$ & $I_2$ & $I_3$ & $COG$ & $N_1$ & $N_2$ & $N_3$ \\ \hline
+\end{tabular}
+
+The rigid body type 0 constraints the particles and nodes in a similar way as boundary conditions with the advantage that initial and boudary conditions apply only on its centre of gravity. Particles constrained in rigid body type 0 hold the rigid body motion updating state variables including stress and strain. For particles constrained in the rigid body type 1, the state variables including stress and strain are not updated and the rigid body keeps the initial date variables of the particles involved. Nodes constrained in rigid body type 0 or 1 hold the rigid body motion.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

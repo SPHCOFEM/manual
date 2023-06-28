@@ -1,0 +1,215 @@
+\subsection{Output file}
+
+The results are saved in \texttt{FILE.out} based on saved variables defined by \texttt{SAVE}. The results can be read and displayed by MATLAB scripts \texttt{results\_read.m} and \texttt{results\_view.m}.
+
+The beginning of \texttt{FILE.out} file consists of all global definitions and counts followed by the variables saved at the defined time steps. The order of appearance is according to the following tables.
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1in}|C{0.8in}|C{0.8in}|C{0.7in}|C{0.6in}|C{0.7in}|C{0.7in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size}$^*$ & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+Dimension & \texttt{dim} & \texttt{1} & \texttt{integer} & \texttt{dim} & \texttt{1} & \texttt{integer*4} \\ \hline
+X-SPH switch & \texttt{ix} & \texttt{1} & \texttt{integer} & \texttt{ix} & \texttt{1} & \texttt{integer*4} \\ \hline
+Number of materials & \texttt{n\_m} & \texttt{1} & \texttt{integer} & \texttt{n\_m} & \texttt{1} & \texttt{integer*4} \\ \hline
+Number of particles & \texttt{n\_s} & \texttt{1} & \texttt{integer} & \texttt{n\_s} & \texttt{1} & \texttt{integer*4} \\ \hline
+Number of nodes & \texttt{n\_b} & \texttt{1} & \texttt{integer} & \texttt{n\_b} & \texttt{1} & \texttt{integer*4} \\ \hline
+Number of elements & \texttt{n\_e} & \texttt{1} & \texttt{integer} & \texttt{n\_e} & \texttt{1} & \texttt{integer*4} \\ \hline
+Number of rigid bodies & \texttt{n\_r} & \texttt{1} & \texttt{integer} & \texttt{n\_e} & \texttt{1} & \texttt{integer*4} \\ \hline
+Number of contacts & \texttt{n\_c} & \texttt{1} & \texttt{integer} & \texttt{n\_c} & \texttt{1} & \texttt{integer*4} \\ \hline
+Material numbers & \texttt{num\_m} & \texttt{[1, n\_m]} & \texttt{integer} & \texttt{num\_m} & \texttt{[1, n\_m]} & \texttt{integer*4} \\ \hline
+Particle numbers & \texttt{num\_s} & \texttt{[1, n\_s]} & \texttt{integer} & \texttt{num\_s} & \texttt{[1, n\_s]} & \texttt{integer*4} \\ \hline
+Nodal numbers & \texttt{num\_b} & \texttt{[1, n\_b]} & \texttt{integer} & \texttt{num\_b} & \texttt{[1, n\_b]} & \texttt{integer*4} \\ \hline
+Element numbers & \texttt{num\_e} & \texttt{[1, n\_e]} & \texttt{integer} & \texttt{num\_e} & \texttt{[1, n\_e]} & \texttt{integer*4} \\ \hline
+Particle materials & \texttt{mat\_s} & \texttt{[1, n\_s]} & \texttt{integer} & \texttt{mat\_s} & \texttt{[1, n\_s]} & \texttt{integer*4} \\ \hline
+Elements materials & \texttt{mat\_e} & \texttt{[1, n\_e]} & \texttt{integer} & \texttt{mat\_e} & \texttt{[1, n\_e]} & \texttt{integer*4} \\ \hline
+Element nodes & \texttt{nod\_e} & \texttt{[1, 4*n\_e]} & \texttt{integer} & \texttt{bele} & \texttt{[n\_e, 4]} & \texttt{integer*4} \\ \hline
+Saved variables switch & \texttt{variable}$^{**}$ & \texttt{1} & \texttt{integer} & \texttt{saver} & \texttt{[1, 37]} & \texttt{integer*4} \\ \hline
+\end{tabular}
+}
+
+$^*$\texttt{1} means a scalar, \texttt{[m, n]} means a matrix of size size $(m\times n$).
+
+$^{**}$\texttt{variable} represent 37 variables according to the definition in the \texttt{SAVE} keyword, particularly \texttt{save\_dt}, \texttt{save\_kine\_s}, \texttt{save\_inne\_s}, \texttt{save\_pote\_s}, \texttt{save\_kine\_b}, \texttt{save\_disi\_b}, \texttt{save\_defo\_b}, \texttt{save\_pote\_b}, \texttt{save\_tote}, \texttt{save\_v\_s}, \texttt{save\_dv\_s}, \texttt{save\_a\_s}, \texttt{save\_f\_s}, \texttt{save\_rho\_s}, \texttt{save\_drhodt\_s}, \texttt{save\_u\_s}, \texttt{save\_dudt\_s}, \texttt{save\_p\_s}, \texttt{save\_c\_s}, \texttt{save\_h\_s}, \texttt{save\_S\_s}, \texttt{save\_dSdt\_s}, \texttt{save\_e\_s}, \texttt{save\_dedt\_s}, \texttt{save\_O\_s}, \texttt{save\_v\_b}, \texttt{save\_a\_b}, \texttt{save\_f\_b}, \texttt{save\_x\_r}, \texttt{save\_psi\_r}, \texttt{save\_v\_r}, \texttt{save\_omega\_r}, \texttt{save\_a\_r}, \texttt{save\_alpha\_r}, \texttt{save\_f\_r}, \texttt{save\_M\_r} and \texttt{save\_f\_c}. In the MATLAB script, they are represented by a row vectorof of size $(1\times 37$)
+
+The particular output variables defined by \texttt{SAVE} are stored in the binary file \texttt{FILE.out} as a sequence related to the saved time steps. At each defined time step, firstly the scalar variables are saved. Only variables having \texttt{1} in \texttt{SAVE} are saved to \texttt{FILE.out}. The script \texttt{results\_read.m} reads the results to the following variables:
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+Time & \texttt{t} & \texttt{1} & \texttt{double} & \texttt{t} & \texttt{[s$^*$, 1]} & \texttt{real*8} \\ \hline
+Time step & \texttt{dt} & \texttt{1} & \texttt{double} & \texttt{dt} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Particles kinetic energy & \texttt{kines} & \texttt{1} & \texttt{double} & \texttt{kine\_s} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Particles internal energy & \texttt{ionnes} & \texttt{1} & \texttt{double} & \texttt{inne\_s} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Particles potential energy & \texttt{potes} & \texttt{1} & \texttt{double} & \texttt{pote\_s} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Nodal kinetic energy & \texttt{kineb} & \texttt{1} & \texttt{double} & \texttt{kine\_b} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Nodal dissipation energy & \texttt{disib} & \texttt{1} & \texttt{double} & \texttt{disi\_b} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Nodal deformation energy & \texttt{defob} & \texttt{1} & \texttt{double} & \texttt{defo\_b} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+Total energy & \texttt{tote} & \texttt{1} & \texttt{double} & \texttt{tote} & \texttt{[s, 1]} & \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+$^*$Variable \texttt{s} is the number of saved states. Variable \texttt{s} is not known in advance, the MATLAB script just reads until the end of file. Thanks to MATLAB, variable \texttt{s} is not neccesary to be pre-allocated.
+
+The vector and matrices follow. The vectors (e.g. particle pressures) are saved as a row. If any variables has more dimensions (e.g. particle coordinates), the x-dimension is the first row, th y-dimension follows and the z-dimension is the last row. The saved number of dimensions depends on \texttt{dim}.
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+\multirow{3}{1in}{Particles positions} & \multirow{3}{*}{\texttt{x\_s}} & \multirow{3}{*}{\texttt{[1, dim*n\_s]}} & \multirow{3}{*}{\texttt{double}} & \texttt{xs} & \texttt{[s, n\_s]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{ys}$^*$ & \texttt{[s, n\_s]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{zs}$^{**}$ & \texttt{[s, n\_s]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Particles velocities} & \multirow{3}{*}{\texttt{v\_s}} & \multirow{3}{*}{\texttt{[1, dim*n\_s]}} & \multirow{3}{*}{\texttt{double}} & \texttt{vxs} & \texttt{[s, n\_s]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{vys} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{vzs} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Particles velocities derivatives} & \multirow{3}{*}{\texttt{dv\_s}} & \multirow{3}{*}{\texttt{[1, dim*n\_s]}} & \multirow{3}{*}{\texttt{double}} & \texttt{dvxs} & \texttt{[s, n\_s]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{dvys} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{dvzs} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Particles accelerations} & \multirow{3}{*}{\texttt{a\_s}} & \multirow{3}{*}{\texttt{[1, dim*n\_s]}} & \multirow{3}{*}{\texttt{double}} & \texttt{axs} & \texttt{[s, n\_s]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{ays} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{azs} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Particles forces} & \multirow{3}{*}{\texttt{f\_s}} & \multirow{3}{*}{\texttt{[1, dim*n\_s]}} & \multirow{3}{*}{\texttt{double}} & \texttt{fxs} & \texttt{[s, n\_s]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{fys} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{fzs} & \texttt{[s, n\_s]}& \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+$^*$All variables in y-direction are saved only for 2D and 3D problems.
+
+$^{**}$All variables in z-direction are saved only for 3D problems.
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+Particles density & \texttt{rho\_s} & \texttt{1} & \texttt{dlouble} & \texttt{rhos} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+Particles density derivative & \texttt{drhodt\_s} & \texttt{1} & \texttt{dlouble} & \texttt{drhos} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+Particles internal energy & \texttt{u\_s} & \texttt{1} & \texttt{dlouble} & \texttt{us} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+Particles internal energy derivative & \texttt{dudt\_s} & \texttt{1} & \texttt{dlouble} & \texttt{dus} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+Particles pressure & \texttt{p\_s} & \texttt{1} & \texttt{dlouble} & \texttt{ps} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+Particles sound speed & \texttt{c\_s} & \texttt{1} & \texttt{dlouble} & \texttt{cs} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+Particles smoothing length & \texttt{h\_s} & \texttt{1} & \texttt{dlouble} & \texttt{hs} & \texttt{[s, n\_s]} & \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+The matrices variables (e.g. deviatoric stress) are usually symetric, taking into account the positions xx, xy, xz, yy, yz, zz, which are saved as six vectors one by one. For matrices, all dimensions are saved regardless \texttt{dim}.
+
+{\scriptsize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+Particles deformation & \texttt{e\_s} & \texttt{[1, dime*n\_s]}$^*$ & \texttt{dlouble} & \texttt{es} & \texttt{[s, dime*n\_s]} & \texttt{real*8} \\ \hline
+Particles deformation rate & \texttt{dedt\_s} & \texttt{[1, dime*n\_s]} & \texttt{dlouble} & \texttt{des} & \texttt{[s, dime*n\_s]} & \texttt{real*8} \\ \hline
+Particles rotation & \texttt{O\_s} & \texttt{[1, dimo*n\_s]}$^*$ & \texttt{dlouble} & \texttt{Os} & \texttt{[s, dimo*n\_s]} & \texttt{real*8} \\ \hline
+Particles deviatoric stress & \texttt{S\_s} & \texttt{[1, dime*n\_s]} & \texttt{dlouble} & \texttt{Ss} & \texttt{[s, dime*n\_s]}$^*$ & \texttt{real*8} \\ \hline
+Particles deviatoric stress derivative & \texttt{dSdt\_s} & \texttt{[1, dime*n\_s]} & \texttt{dlouble} & \texttt{dSs} & \texttt{[s, dime*n\_s]} & \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+$^*$\texttt{dime} and \texttt{dimo} depend on \texttt{dim} as only an upper triangular matrix for the particular dimension is always saved. For 1D problems, \texttt{Os} and \texttt{Ss} are not save at all as they are irrelevant in 1D. For 2D problems, \texttt{dime = 3} and \texttt{dimo = 1}, for 3D problems, \texttt{dime = 6} and \texttt{dimo = 3}. The reason is that \texttt{es} and \texttt{Ss} are symmetric matrices (so only 3 elements needed in 2D and only 6 elements needed in 3D) and \texttt{Os} is an antisymmetric matrix with zeros on diagonal (so only 1 element needed in 2D and only 3 elements needed in 3D).
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+\multirow{3}{1in}{Nodal positions} & \multirow{3}{*}{\texttt{x\_b}} & \multirow{3}{*}{\texttt{[1, dim*n\_b]}} & \multirow{3}{*}{\texttt{double}} & \texttt{xb} & \texttt{[s, n\_b]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{yb}$^*$ & \texttt{[s, n\_b]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{zb}$^{**}$ & \texttt{[s, n\_b]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Nodal velocities} & \multirow{3}{*}{\texttt{v\_b}} & \multirow{3}{*}{\texttt{[1, dim*n\_b]}} & \multirow{3}{*}{\texttt{double}} & \texttt{vxb} & \texttt{[s, n\_b]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{vyb} & \texttt{[s, n\_b]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{vzb} & \texttt{[s, n\_b]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Nodal accelerations} & \multirow{3}{*}{\texttt{a\_b}} & \multirow{3}{*}{\texttt{[1, dim*n\_b]}} & \multirow{3}{*}{\texttt{double}} & \texttt{axb} & \texttt{[s, n\_b]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{ayb} & \texttt{[s, n\_b]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{azb} & \texttt{[s, n\_b]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Nodal forces} & \multirow{3}{*}{\texttt{f\_b}} & \multirow{3}{*}{\texttt{[1, dim*n\_b]}} & \multirow{3}{*}{\texttt{double}} & \texttt{fxb} & \texttt{[s, n\_b]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{fyb} & \texttt{[s, n\_b]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{fzb} & \texttt{[s, n\_b]}& \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+$^*$All variables in y-direction are saved only for 2D and 3D problems.
+
+$^{**}$All variables in z-direction are saved only for 3D problems.
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+\multirow{3}{1in}{Rigid bodies positions} & \multirow{3}{*}{\texttt{x\_r}} & \multirow{3}{*}{\texttt{[1, dim*n\_r]}} & \multirow{3}{*}{\texttt{double}} & \texttt{xr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{yr}$^*$ & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{zr}$^{**}$ & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies rotations} & \multirow{3}{*}{\texttt{psi\_r}} & \multirow{3}{*}{\texttt{[1, dimr*n\_r]}$^{***}$} & \multirow{3}{*}{\texttt{double}} & \texttt{psixr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{psiyr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{psizr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies velocities} & \multirow{3}{*}{\texttt{v\_r}} & \multirow{3}{*}{\texttt{[1, dim*n\_r]}} & \multirow{3}{*}{\texttt{double}} & \texttt{vxr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{vyr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{vzr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies rotational velocities} & \multirow{3}{*}{\texttt{o\_r}} & \multirow{3}{*}{\texttt{[1, dimr*n\_r]}$^{***}$} & \multirow{3}{*}{\texttt{double}} & \texttt{oxr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{oyr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{ozr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies accelerations} & \multirow{3}{*}{\texttt{a\_r}} & \multirow{3}{*}{\texttt{[1, dim*n\_r]}} & \multirow{3}{*}{\texttt{double}} & \texttt{axr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{ayr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{azr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies rotational accelerations} & \multirow{3}{*}{\texttt{alpha\_r}} & \multirow{3}{*}{\texttt{[1, dimr*n\_r]}$^{***}$} & \multirow{3}{*}{\texttt{double}} & \texttt{alphaxr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{alphayr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{alphazr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies forces} & \multirow{3}{*}{\texttt{f\_r}} & \multirow{3}{*}{\texttt{[1, dim*n\_r]}} & \multirow{3}{*}{\texttt{double}} & \texttt{fxr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{fyr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{fzr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\multirow{3}{1in}{Rigid bodies moments} & \multirow{3}{*}{\texttt{M\_r}} & \multirow{3}{*}{\texttt{[1, dimr*n\_r]}$^{***}$} & \multirow{3}{*}{\texttt{double}} & \texttt{Mxr} & \texttt{[s, n\_r]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{Myr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{Nzr} & \texttt{[s, n\_r]}& \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+$^*$All variables in y-direction are saved only for 2D and 3D problems.
+
+$^{**}$All variables in z-direction are saved only for 3D problems.
+
+$^{***}$\texttt{dimr} depends on \texttt{dim}. For 1D problems, \texttt{psir}, \texttt{or} and \texttt{alphar} are not save at all as they are irrelevant in 1D. For 2D problems, \texttt{dimr = 1} and for 3D problems, \texttt{dimr = 3}. The reason is that there is only a single rotation in 2D and 2 rotations in 3D.
+
+
+{\footnotesize
+\begin{tabular}{|l|c|c|c|c|c|c|}%{|L{1.6in}|C{1in}|C{1in}|C{0.8in}|L{0.8in}|}
+\hline
+\multirow{2}{*}{\bf Quantity} & \multicolumn{3}{c|}{\bf Solver} &\multicolumn{3}{c|}{\bf MATLAB} \\ \cline{2-7}
+& {\bf Variable} & {\bf Size} & {\bf Format} & {\bf Variable} & {\bf Size} & {\bf Format} \\ \hline
+\multirow{3}{15mm}{Contact force} & \multirow{3}{*}{\texttt{F\_c}} & \multirow{3}{*}{\texttt{[1, dim*n\_c]}} & \multirow{3}{*}{\texttt{double}} & \texttt{fxc} & \texttt{[s, n\_b]}& \texttt{real*8}\\ \cline{5-7}
+& & & & \texttt{fyc}$^*$ & \texttt{[s, n\_b]}& \texttt{real*8} \\ \cline{5-7}
+& & & & \texttt{fzc}$^{**}$ & \texttt{[s, n\_b]}& \texttt{real*8} \\ \hline
+\end{tabular}
+}
+
+$^*$Force in y-direction are saved only for 2D and 3D problems.
+
+$^{**}$Force in z-direction are saved only for 3D problems.
+
+For displaying particular options, the script \texttt{results\_read.m} uses particular switches :
+
+\begin{tabular}{|c|l|c|l|}
+\hline
+{\bf Variable} & {\bf Switch} & {\bf Value} & {\bf Description} \\ \hline
+\texttt{nt} & Movie step & \texttt{vector} & \texttt{nt} is vector of saved time steps \\ \hline
+\multirow{2}{*}{\texttt{iw}} & \multirow{2}{1in}{Save movie} & [0] & No \\ \cline{3-4}
+& & 1 & Yes \\ \hline
+\multirow{2}{*}{\texttt{id}} & \multirow{2}{1in}{Movie composition} & [0] & Movie only \\ \cline{3-4}
+& & 1 & Movie with a variable$^*$ \\ \hline
+\multirow{3}{*}{\texttt{ip}} & \multirow{3}{1in}{Draw} & 0 & Contours ({\it only in 2D}) \\ \cline{3-4}
+& & [1] & Particles \\ \cline{3-4}
+& & 2 & Particles with velocity ({\it only in 2D}) \\ \cline{3-4} \hline
+\multirow{2}{*}{\texttt{ik}} & \multirow{2}{4cm}{Draw particular particles} & \multirow{2}{*}{\texttt{vector}} & \multirow{2}{3in}{\texttt{ik} is vector of particle numbers (empty \texttt{vector} draws all particles)} \\
+& & & \\ \hline
+\multirow{3}{*}{\texttt{ib}} & \multirow{3}{4cm}{Draw boundary elements} & [0] & No \\ \cline{3-4}
+& & 1 & Yes \\ \cline{3-4}
+& & 2 & Element with edges \\ \hline
+\end{tabular}
+
+$^*$The variable is defined in \texttt{c2} and described in \texttt{c2val}. Variable \texttt{c2} is one of the output variables in MATLAB. E.g. \texttt{c2 = exx;} and \texttt{c2val = e\_\{xx\};} show colour contours for deformation $\epsilon_{xx}$.
